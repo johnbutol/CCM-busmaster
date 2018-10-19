@@ -1,0 +1,26 @@
+CXX = mingw32-g++
+
+BM_LIB = -L"C:\Program Files (x86)\BUSMASTER_v3.2.2\SimulatedSystems\OBJ" -lWrapper_CAN
+
+BM_INCLUDES = -I"C:\Program Files (x86)\BUSMASTER_v3.2.2\SimulatedSystems\Include"
+
+CXXFLAGS = -Wall -c
+#$(BM_INCLUDE)
+
+dll = cem.dll
+
+DBOBJFILE = "C:\ProgramData\BUSMASTER\General\DBCache\8CE_gcc4.8.1.obj" 
+
+DBINCLUDES = -include"C:\ProgramData\BUSMASTER\General\DBCache\8CE.h" 
+
+
+all: $(dll)
+
+$(dll): cem.o
+	$(CXX) -shared -Wl,--dll  cem.o $(DBOBJFILE) $(BM_LIB) -o $@
+
+cem.o: C:/PROGRA~2/BUSMAS~1.2/SIMULA~1/cem/cem.cpp
+	$(CXX) $(DBINCLUDES) $(CXXFLAGS) $(BM_INCLUDES) $< -o $@
+
+clean: 
+	del /f cem.o
